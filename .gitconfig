@@ -28,5 +28,5 @@
 	rh2 = reset HEAD^^ --hard
 	rh3 = reset HEAD^^^ --hard
 [user]
-	email = dsantamaria18@gmail.com
-	name = dsantamarialago
+	email = ricardoayala2m@gmail.com
+	name = rayaladeliras
