@@ -72,7 +72,8 @@ WORDCHARS=${WORDCHARS//[\/]}
 
 # Customize the style that the suggestions are shown with.
 # See https://github.com/zsh-users/zsh-autosuggestions/blob/master/README.md#suggestion-highlight-style
-#ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=10'
+ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=10'
+ZSH_AUTOSUGGEST_STRATEGY=(history completion)
 
 #
 # zsh-syntax-highlighting
@@ -95,7 +96,7 @@ if [[ ${ZIM_HOME}/init.zsh -ot ${ZDOTDIR:-${HOME}}/.zimrc ]]; then
   # Update static initialization script if it's outdated, before sourcing it
   source ${ZIM_HOME}/zimfw.zsh init -q
 fi
-source ${ZIM_HOME}/init.zsh
+#source ${ZIM_HOME}/init.zsh
 
 # ------------------------------
 # Post-init module configuration
@@ -104,8 +105,13 @@ source ${ZIM_HOME}/init.zsh
 #
 # zsh-history-substring-search
 #
+#source ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-history-substring-search/zsh-history-substring-search.zsh
 
 # Bind ^[[A/^[[B manually so up/down works both before and after zle-line-init
+autoload -U up-line-or-beginning-search
+autoload -U down-line-or-beginning-search
+zle -N up-line-or-beginning-search
+zle -N down-line-or-beginning-search
 bindkey '^[[A' history-substring-search-up
 bindkey '^[[B' history-substring-search-down
 
@@ -143,11 +149,11 @@ alias ..="cd .."
 alias cdsh="cd ~/repos/sh"
 alias cdmio="cd ~/repos/mio"
 alias untar="tar -zxvf "
-alias ls="exa -lhF"
-alias ll="exa -l"
-alias la="exa -la"
+alias ls="ls -lahFG"
+alias ll="ls -lahG"
+alias la="ls -lahG"
 alias df="df -H"
-alias du="du -ch"i
+alias du="du -ch"
 alias mv="mv -v "
 alias cp="cp -v "
 alias rm="rm -vi "
@@ -205,7 +211,11 @@ setopt prompt_subst
 #THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
 export SDKMAN_DIR="/Users/dsantamarialago/.sdkman"
 [[ -s "/Users/dsantamarialago/.sdkman/bin/sdkman-init.sh" ]] && source "/Users/dsantamarialago/.sdkman/bin/sdkman-init.sh"
-source ~/repos/mio/powerlevel10k/powerlevel10k.zsh-theme
+source ~/.oh-my-zsh/custom/themes/powerlevel10k/powerlevel10k.zsh-theme
+
+plugins=(zsh-completions syntax-highlighting history-substring-search zsh-autosuggestions)
+autoload -U compinit && compinit
+source /usr/local/share/zsh-history-substring-search/zsh-history-substring-search.zsh
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
